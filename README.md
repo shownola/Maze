@@ -4,7 +4,8 @@
 * User will use the "WASD" keys to maneuver the ball.
 
 CHALLENGES:
-* Generate a maze - implement a recursive algorithm
+* Generate a maze
+* Implement a recursive algorithm
 * How to draw this on the screen? - Matter.js, a 2d physics engine for the web
 * Make designated keyboard keys control the ball - can use Matter.js to map key presses to movements of shapes
 * Detect when the ball touches the green square - Again, Matter.js has the ability to detect collisions between different shapes and report them as events.
