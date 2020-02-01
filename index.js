@@ -1,8 +1,8 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
 
-const cellsHorizontal = 6;
-const cellsVertical = 5;
+const cellsHorizontal = 10;
+const cellsVertical = 9;
 const width  = window.innerWidth;
 const height = window.innerHeight;
 
@@ -25,7 +25,7 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-// Walls  (units over, units down, units wide, units tall)
+// WALLS  (units over, units down, units wide, units tall)
 // (top, bottom, lside, rside)
 const walls = [
   Bodies.rectangle(width/2, 0, width, 2, { isStatic: true }),
@@ -110,7 +110,10 @@ horizontals.forEach((row, rowIndex) => {
       10,
       {
         label: 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'red'
+        }
       }
     );
     World.add(world, wall);
@@ -129,7 +132,10 @@ verticals.forEach((row, rowIndex) => {
       unitLengthY,
       {
         label: 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'red'
+        }
       }
     );
     World.add(world, wall);
@@ -143,7 +149,10 @@ const goal = Bodies.rectangle(
   unitLengthY * .7,
   {
     label: 'goal',
-    isStatic: true
+    isStatic: true,
+    render: {
+      fillStyle: 'green'
+    }
   }
 );
 World.add(world, goal);
@@ -151,7 +160,10 @@ World.add(world, goal);
 // BALL
 const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
 const ball = Bodies.circle(unitLengthX / 2, unitLengthY / 2, ballRadius, {
-  label: 'ball'
+  label: 'ball',
+  render: {
+    fillStyle: 'blue'
+  }
 }
 );
 World.add(world, ball);
@@ -178,6 +190,7 @@ Events.on(engine, 'collisionStart', event => {
   event.pairs.forEach((collision) => {
     const labels = ['ball', 'goal'];
     if(labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)){
+      document.querySelector('.winner').classList.remove('hidden');
       world.gravity.y = 1;
       world.bodies.forEach(body => {
         if(body.label === 'wall'){
